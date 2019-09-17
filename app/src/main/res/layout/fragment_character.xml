@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.blassin.max.munchkinhelper.ui.character.CharacterViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:paddingBottom="20sp"
+        android:paddingTop="20sp">
+        <ImageView
+            android:id="@+id/death_skull"
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_skull"
+            android:translationZ="5dp"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="0.0"
+            android:alpha="0.0"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/character_icons_row"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/characters_fab_row"
+            app:layout_constraintVertical_chainStyle="packed">
+                <include layout="@layout/character_stat_item"
+                    android:id="@+id/character_stat_level"
+                    app:imgSrc='@{@drawable/ic_star_orange}'
+                    app:value="@{viewModel.player.level}"
+                    app:onDecreaseValueListener='@{() -> viewModel.changeStat("level", -1)}'
+                    app:onIncreaseValueListener='@{() -> viewModel.changeStat("level", +1)}'
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/character_stat_stuff"/>
+                <include layout="@layout/character_stat_item"
+                    android:id="@+id/character_stat_stuff"
+                    app:imgSrc='@{@drawable/ic_helmet_orange}'
+                    app:value="@{viewModel.player.stuff}"
+                    app:onDecreaseValueListener='@{() -> viewModel.changeStat("stuff", -1)}'
+                    app:onIncreaseValueListener='@{() -> viewModel.changeStat("stuff", +1)}'
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toRightOf="@id/character_stat_level"
+                    app:layout_constraintBottom_toBottomOf="@id/character_stat_level"
+                    app:layout_constraintTop_toTopOf="@id/character_stat_level"
+                    app:layout_constraintRight_toRightOf="@id/character_stat_potions"/>
+                <include layout="@layout/character_stat_item"
+                    app:value="@{viewModel.player.bonus}"
+                    android:id="@+id/character_stat_potions"
+                    app:imgSrc='@{@drawable/ic_potion_orange}'
+                    app:onDecreaseValueListener='@{() -> viewModel.changeStat("bonus", -1)}'
+                    app:onIncreaseValueListener='@{() -> viewModel.changeStat("bonus", +1)}'
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toRightOf="@id/character_stat_stuff"
+                    app:layout_constraintBottom_toBottomOf="@id/character_stat_level"
+                    app:layout_constraintTop_toTopOf="@id/character_stat_level"
+                    app:layout_constraintRight_toRightOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/characters_fab_row"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/character_icons_row"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingEnd="26dp"
+            android:paddingRight="26dp"
+            android:paddingLeft="26dp"
+            android:paddingStart="26dp"
+            android:paddingBottom="10dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_back"
+                style="@style/fab"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/fab_kill"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                android:src="@drawable/ic_arrow_left_white"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick='@{ () -> viewModel.onArrowClick(com.blassin.max.munchkinhelper.ui.character.ArrowDirection.BACK)}'
+                />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_kill"
+                style="@style/fab"
+                app:layout_constraintTop_toTopOf="@id/fab_back"
+                app:layout_constraintBottom_toBottomOf="@id/fab_back"
+                app:layout_constraintLeft_toRightOf="@id/fab_back"
+                app:layout_constraintRight_toLeftOf="@id/fab_forward"
+                android:src="@drawable/ic_skull_white"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{ () -> viewModel.onKillCharacterClick() }"
+                />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:src="@drawable/ic_arrow_right_white"
+                android:id="@+id/fab_forward"
+                style="@style/fab"
+                app:layout_constraintTop_toTopOf="@id/fab_back"
+                app:layout_constraintBottom_toBottomOf="@id/fab_back"
+                app:layout_constraintLeft_toRightOf="@id/fab_kill"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintRight_toRightOf="parent"
+                android:onClick='@{ () -> viewModel.onArrowClick(com.blassin.max.munchkinhelper.ui.character.ArrowDirection.FORWARD)}'/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

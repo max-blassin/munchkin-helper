@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item android:id="@+id/menu_main_swords"
+        android:title=""
+        android:icon="@drawable/ic_swords_white"
+        app:showAsAction="always"
+        android:enabled="false"
+        android:visible="false"
+        tools:visible="true"
+        />
+    <item android:id="@+id/menu_main_power"
+        android:title="0"
+        app:showAsAction="always"
+        android:visible="false"
+        tools:visible="true"/>
+</menu>
